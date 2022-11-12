@@ -26,9 +26,12 @@ namespace WpfApp1
                     bool IsLower = false;
                     //переменная для проверки спецсимволов
                     bool IsSpec = false;
+                    bool duplicate = true;
                     //цикл по всем символам пароля
+
                     foreach (var item in password)
                     {
+
                         //проверяем пароль на цифры
                         if (char.IsDigit(item))
                         {
@@ -49,6 +52,12 @@ namespace WpfApp1
                         {
                             IsSpec = true;
                         }
+                        //проверяем пароль на повторяющиеся подряд символы
+                        for (int i = 0; i < password.Length-1; i++)
+                            if (password[i] == password[i + 1])
+                            {
+                                duplicate = false;
+                            }
                     }
                     //Проверяем переменную если истина то цифры есть
                     if (!IsDigit)
@@ -69,6 +78,10 @@ namespace WpfApp1
                     if (!IsSpec)
                     {
                         return "Пароль должен содержать спецсимволы!";
+                    }
+                    if (!duplicate)
+                    {
+                        return "Пароль не должен содержать подряд повторяющиеся символы!";
                     }
                     //возвращает (выходит) из метода с сообщением в квадратных ковычках
                     return "Пароль отличный!";
